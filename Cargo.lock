@@ -1313,7 +1313,7 @@ dependencies = [
 
 [[package]]
 name = "nextui-s3-sync"
-version = "1.4.2"
+version = "1.4.3"
 dependencies = [
  "anyhow",
  "crossbeam",
@@ -1354,7 +1354,7 @@ dependencies = [
 
 [[package]]
 name = "nextui-screenshots"
-version = "1.2.1"
+version = "1.2.2"
 dependencies = [
  "anyhow",
  "chrono",
@@ -1368,7 +1368,7 @@ dependencies = [
 
 [[package]]
 name = "nextui-views"
-version = "0.6.0"
+version = "0.6.1"
 dependencies = [
  "anyhow",
  "cc",
