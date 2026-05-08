@@ -1368,7 +1368,7 @@ dependencies = [
 
 [[package]]
 name = "nextui-views"
-version = "0.6.1"
+version = "0.6.2"
 dependencies = [
  "anyhow",
  "cc",
@@ -1377,7 +1377,11 @@ dependencies = [
  "lazy_static",
  "lightvgl-sys",
  "log",
+ "prettyplease",
+ "proc-macro2",
+ "quote",
  "regex",
+ "syn",
 ]
 
 [[package]]
