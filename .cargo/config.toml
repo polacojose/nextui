@@ -1,0 +1,7 @@
+[env]
+DEP_LV_CONFIG_PATH = { value = "common/lvgl_configs/macos", relative = true }
+CFLAGS = "-I/opt/homebrew/include/SDL2 -D_THREAD_SAFE"
+BINDGEN_EXTRA_CLANG_ARGS = "-I/opt/homebrew/include/SDL2 -D_THREAD_SAFE"
+
+[target.aarch64-apple-darwin]
+rustflags = ["-L/opt/homebrew/lib", "-lSDL2"]

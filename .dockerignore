@@ -1,0 +1,10 @@
+build/
+target/
+.git/
+.build.release.stamp
+.build.dev.stamp
+.DS_Store
+test/
+tests/
+**/test/
+**/tests/

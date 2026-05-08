@@ -1,0 +1,12 @@
+[submodule "nextui-screenshots"]
+	path = nextui-screenshots
+	url = git@github.com:polacojose/nextui-screenshots.git
+[submodule "nextui-s3-sync"]
+	path = nextui-s3-sync
+	url = git@github.com:polacojose/nextui-s3-sync.git
+[submodule "nextui-s3-sync-lib"]
+	path = nextui-s3-sync-lib
+	url = git@github.com:polacojose/nextui-s3-sync-lib.git
+[submodule "nextui-views"]
+	path = nextui-views
+	url = git@github.com:polacojose/nextui-views.git

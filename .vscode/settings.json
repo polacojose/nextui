@@ -1,0 +1,12 @@
+{
+  "rust-analyzer.cargo.target": "aarch64-apple-darwin",
+  "rust-analyzer.check.targets": [
+    "aarch64-apple-darwin",
+    "aarch64-unknown-linux-musl"
+  ],
+  "rust-analyzer.cargo.extraEnv": {
+    "DEP_LV_CONFIG_PATH": "/Users/jose/Development/nextui/common/lvgl_configs/macos",
+    "CFLAGS": "-I/opt/homebrew/include/SDL2 -D_THREAD_SAFE",
+    "BINDGEN_EXTRA_CLANG_ARGS": "-I/opt/homebrew/include/SDL2 -D_THREAD_SAFE"
+  },
+}
