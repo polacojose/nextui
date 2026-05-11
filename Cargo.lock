@@ -230,6 +230,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "circular-buffer"
+version = "1.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "14c638459986b83c2b885179bd4ea6a2cbb05697b001501a56adb3a3d230803b"
+
+[[package]]
 name = "clang-sys"
 version = "1.8.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1313,11 +1319,12 @@ dependencies = [
 
 [[package]]
 name = "nextui-s3-sync"
-version = "1.4.4"
+version = "1.5.0"
 dependencies = [
  "anyhow",
  "crossbeam",
  "futures",
+ "lightvgl-sys",
  "log",
  "mimalloc",
  "nextui-s3-sync-lib",
@@ -1354,7 +1361,7 @@ dependencies = [
 
 [[package]]
 name = "nextui-screenshots"
-version = "1.2.3"
+version = "1.3.0"
 dependencies = [
  "anyhow",
  "chrono",
@@ -1368,10 +1375,11 @@ dependencies = [
 
 [[package]]
 name = "nextui-views"
-version = "0.7.0"
+version = "0.8.0"
 dependencies = [
  "anyhow",
  "cc",
+ "circular-buffer",
  "crossbeam",
  "derive_builder",
  "lazy_static",
