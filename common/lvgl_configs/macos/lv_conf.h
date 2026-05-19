@@ -186,7 +186,7 @@
 #define LV_USE_MATRIX               0
 
 #ifndef LV_USE_PRIVATE_API
-    #define LV_USE_PRIVATE_API      0
+    #define LV_USE_PRIVATE_API      1
 #endif
 
 /*==================

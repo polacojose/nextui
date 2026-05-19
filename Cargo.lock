@@ -473,6 +473,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "derive-getters"
+version = "0.5.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "74ef43543e701c01ad77d3a5922755c6a1d71b22d942cb8042be4994b380caff"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+]
+
+[[package]]
 name = "derive_builder"
 version = "0.20.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1319,7 +1330,7 @@ dependencies = [
 
 [[package]]
 name = "nextui-s3-sync"
-version = "1.5.0"
+version = "1.6.0"
 dependencies = [
  "anyhow",
  "crossbeam",
@@ -1334,7 +1345,7 @@ dependencies = [
 
 [[package]]
 name = "nextui-s3-sync-lib"
-version = "1.9.1"
+version = "1.9.2"
 dependencies = [
  "anyhow",
  "async-compression",
@@ -1361,7 +1372,7 @@ dependencies = [
 
 [[package]]
 name = "nextui-screenshots"
-version = "1.3.0"
+version = "1.4.0"
 dependencies = [
  "anyhow",
  "chrono",
@@ -1375,12 +1386,13 @@ dependencies = [
 
 [[package]]
 name = "nextui-views"
-version = "0.8.0"
+version = "0.9.0"
 dependencies = [
  "anyhow",
  "cc",
  "circular-buffer",
  "crossbeam",
+ "derive-getters",
  "derive_builder",
  "lazy_static",
  "lightvgl-sys",
