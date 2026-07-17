@@ -9,4 +9,7 @@
     "CFLAGS": "-I/opt/homebrew/include/SDL2 -D_THREAD_SAFE",
     "BINDGEN_EXTRA_CLANG_ARGS": "-I/opt/homebrew/include/SDL2 -D_THREAD_SAFE"
   },
+  "rust-analyzer.diagnostics.disabled": [
+	  "unlinked-file"
+  ]
 }

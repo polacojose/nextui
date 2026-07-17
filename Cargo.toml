@@ -5,6 +5,7 @@ members = [
     "nextui-s3-sync",
     "nextui-s3-sync-lib",
 ]
+resolver = "3"
 
 [workspace.dependencies]
 nextui-views = { path = "nextui-views" }

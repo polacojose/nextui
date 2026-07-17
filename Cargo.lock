@@ -1345,7 +1345,7 @@ dependencies = [
 
 [[package]]
 name = "nextui-s3-sync-lib"
-version = "1.9.2"
+version = "1.9.4"
 dependencies = [
  "anyhow",
  "async-compression",
@@ -1372,7 +1372,7 @@ dependencies = [
 
 [[package]]
 name = "nextui-screenshots"
-version = "1.5.0"
+version = "1.5.1"
 dependencies = [
  "anyhow",
  "chrono",
@@ -1386,7 +1386,7 @@ dependencies = [
 
 [[package]]
 name = "nextui-views"
-version = "0.10.0"
+version = "0.11.0"
 dependencies = [
  "anyhow",
  "cc",
@@ -1817,9 +1817,9 @@ dependencies = [
 
 [[package]]
 name = "regex"
-version = "1.12.3"
+version = "1.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e10754a14b9137dd7b1e3e5b0493cc9171fdd105e0ab477f51b72e7f3ac0e276"
+checksum = "2a0e75113e14dc5acb068cd0786884f214f1312650a3d36d269f5c4f3cdee8a2"
 dependencies = [
  "aho-corasick",
  "memchr",
@@ -1840,9 +1840,9 @@ dependencies = [
 
 [[package]]
 name = "regex-syntax"
-version = "0.8.10"
+version = "0.8.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "dc897dd8d9e8bd1ed8cdad82b5966c3e0ecae09fb1907d58efaa013543185d0a"
+checksum = "d6f6ff9a378485b298a5286656da665ba74413d36db0979633275d2e708145d4"
 
 [[package]]
 name = "reqsign"
