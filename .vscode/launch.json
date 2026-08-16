@@ -1,0 +1,50 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+		{
+            "name": "Debug executable 'nextui-views'",
+            "type": "codelldb",
+			"program": "/Users/jose/Development/rust-shared/debug/nextui-views",
+    		"cwd": "${workspaceFolder}/nextui-views",
+            "request": "launch",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=nextui-views",
+                    "--package=nextui-views"
+                ]
+            },
+            "args": []
+        },
+		{
+            "name": "Debug executable 'nextui-s3-sync'",
+            "type": "codelldb",
+			"program": "/Users/jose/Development/rust-shared/debug/nextui-s3-sync",
+    		"cwd": "${workspaceFolder}/nextui-s3-sync",
+            "request": "launch",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=nextui-s3-sync",
+                    "--package=nextui-s3-sync"
+                ]
+            },
+            "args": []
+        },
+        {
+            "name": "Debug executable 'nextui-screenshots'",
+            "type": "codelldb",
+			"program": "/Users/jose/Development/rust-shared/debug/nextui-screenshots",
+    		"cwd": "${workspaceFolder}/nextui-screenshots",
+            "request": "launch",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=nextui-screenshots",
+                    "--package=nextui-screenshots"
+                ]
+            },
+            "args": []
+        }
+    ]
+}
