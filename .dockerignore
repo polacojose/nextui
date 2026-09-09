@@ -8,3 +8,5 @@ test/
 tests/
 **/test/
 **/tests/
+Makefile
+common.mk

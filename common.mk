@@ -4,55 +4,64 @@ COMMON_DIR := $(WORKSPACE_ROOT)/common
 COMMON_LV_CONF := $(COMMON_DIR)/lvgl_configs/linux/lv_conf.h
 
 RELEASE_IMAGE := $(APP_NAME)-arm64-release
-DEV_IMAGE := $(APP_NAME)-arm64-dev
+DEBUG_IMAGE := $(APP_NAME)-arm64-debug
 RELEASE_STAMP := .build.release.stamp
-DEV_STAMP := .build.dev.stamp
+DEBUG_STAMP := .build.debug.stamp
 RELEASE_DIR := build/release
-DEV_DIR := build/dev
+DEBUG_DIR := build/debug
 DOCKER ?= podman
 
-.PHONY: build build-dev package package-dev send send-dev clean
+.PHONY: build build-debug package package-debug send send-debug clean
 
-$(RELEASE_STAMP): $(SOURCES)
-	rm -rf $(RELEASE_DIR) $(RELEASE_STAMP)
-	mkdir -p $(RELEASE_DIR)/
-	$(DOCKER) buildx build --ssh default --build-arg BUILD_PROFILE=release --platform=linux/arm64 -t $(RELEASE_IMAGE) -f Dockerfile $(WORKSPACE_ROOT) --load
-	touch $(RELEASE_STAMP)
+buildctl: $(SOURCES)
 
-$(DEV_STAMP): $(SOURCES)
-	rm -rf $(DEV_DIR) $(DEV_STAMP)
-	mkdir -p $(DEV_DIR)/
-	$(DOCKER) buildx build --ssh default --build-arg BUILD_PROFILE=dev --platform=linux/arm64 -t $(DEV_IMAGE) -f Dockerfile $(WORKSPACE_ROOT) --load
-	touch $(DEV_STAMP)
+	SSH_PRIVATE_KEY=$(base64 -d <<< "$SSH_PRIVATE_KEY")
 
-build: $(RELEASE_STAMP)
+	buildctl \
+	  --addr tcp://buildkitd.gocd.svc:1234 \
+	  --tlscacert "/buildkit_secrets/ca.pem" \
+	  --tlscert "/buildkit_secrets/cert.pem" \
+	  --tlskey "/buildkit_secrets/key.pem" \
+	  	build \
+	  --frontend dockerfile.v0 \
+	  --local context=$(WORKSPACE_ROOT) \
+	  --local dockerfile=$(WORKSPACE_ROOT) \
+	  --opt build-arg:SSH_PRIVATE_KEY="${SSH_PRIVATE_KEY}" \
+	  --opt build-arg:BUILD_PROFILE="$(PROFILE)" \
+	  --opt build-arg:APP_NAME="$(APP_NAME)" \
+	  --import-cache type=registry,ref=registry.polacoproject.net/nextui:buildcache \
+	  --export-cache type=registry,ref=registry.polacoproject.net/nextui:buildcache \
+	  --output type=local,dest=/tmp/$(ENV_DIR)/$(PACKAGE_NAME)
 
-build-dev: $(DEV_STAMP)
+	mkdir -p $(ENV_DIR)/$(PACKAGE_NAME)/
+	mv /tmp/$(ENV_DIR)/$(PACKAGE_NAME)/app/binary $(ENV_DIR)/$(PACKAGE_NAME)/$(APP_NAME)
+
+	touch $(ENV_STAMP)
+
+$(RELEASE_STAMP): ENV_DIR=$(RELEASE_DIR)
+$(RELEASE_STAMP): ENV_STAMP=$(RELEASE_STAMP)
+$(RELEASE_STAMP): PROFILE=release
+$(RELEASE_STAMP): buildctl
+
+$(DEBUG_STAMP): ENV_DIR=$(DEBUG_DIR)
+$(DEBUG_STAMP): ENV_STAMP=$(DEBUG_STAMP)
+$(DEBUG_STAMP): PROFILE=debug
+$(DEBUG_STAMP): buildctl
 
 package: $(RELEASE_STAMP)
-	$(DOCKER) rm extract-release || true
-	$(DOCKER) create --name extract-release $(RELEASE_IMAGE)
-	$(DOCKER) cp extract-release:/app/binary $(RELEASE_DIR)/$(APP_NAME)
-	$(DOCKER) rm extract-release
-	rm -rf $(RELEASE_DIR)/$(PACKAGE_NAME) || true
-	mkdir -p $(RELEASE_DIR)/$(PACKAGE_NAME)
-	cp $(RELEASE_DIR)/$(APP_NAME) launch.sh pak.json $(RELEASE_DIR)/$(PACKAGE_NAME)
+	cp launch.sh pak.json $(RELEASE_DIR)/$(PACKAGE_NAME)
+	tar -cvzf $(RELEASE_DIR)/$(PACKAGE_NAME).tar.gz $(RELEASE_DIR)/$(PACKAGE_NAME)
 
-package-dev: $(DEV_STAMP)
-	$(DOCKER) rm extract-dev || true
-	$(DOCKER) create --name extract-dev $(DEV_IMAGE)
-	$(DOCKER) cp extract-dev:/app/binary $(DEV_DIR)/$(APP_NAME)
-	$(DOCKER) rm extract-dev
-	rm -rf $(DEV_DIR)/$(PACKAGE_NAME) || true
-	mkdir -p $(DEV_DIR)/$(PACKAGE_NAME)
-	cp $(DEV_DIR)/$(APP_NAME) launch.sh pak.json $(DEV_DIR)/$(PACKAGE_NAME)
+package-debug: $(DEBUG_STAMP)
+	cp launch.sh pak.json $(DEBUG_DIR)/$(PACKAGE_NAME)
+	tar -cvzf $(DEBUG_DIR)/$(PACKAGE_NAME).tar.gz $(DEBUG_DIR)/$(PACKAGE_NAME)
 
 send: package
 	sshpass -f .env rsync -vzri --rsync-path=/mnt/SDCARD/Tools/rsync --ignore-times $(RELEASE_DIR)/$(PACKAGE_NAME)/ $(REMOTE_PATH) -P
 
-send-dev: package-dev
-	sshpass -f .env rsync -vzri --rsync-path=/mnt/SDCARD/Tools/rsync --ignore-times $(DEV_DIR)/$(PACKAGE_NAME)/ $(REMOTE_PATH) -P
+send-debug: package-debug
+	sshpass -f .env rsync -vzri --rsync-path=/mnt/SDCARD/Tools/rsync --ignore-times $(DEBUG_DIR)/$(PACKAGE_NAME)/ $(REMOTE_PATH) -P
 
 clean:
-	rm -rf build/ $(RELEASE_STAMP) $(DEV_STAMP)
-	$(DOCKER) rmi $(RELEASE_IMAGE) $(DEV_IMAGE) 2>/dev/null || true
+	rm -rf build/ $(RELEASE_STAMP) $(DEBUG_STAMP)
+	$(DOCKER) rmi $(RELEASE_IMAGE) $(DEBUG_IMAGE) 2>/debug/null || true
